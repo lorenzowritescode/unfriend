@@ -4,6 +4,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Friend {
 
+    public static final int MAX_TWEET_PER_DAY = 50;
+    public static final double MIN_TWEETS_PER_DAY = 0.02;
+    public static final int MAX_DAYS_INACTIVE = 30;
     int id;
     String name;
     Date created;
@@ -48,7 +51,7 @@ public class Friend {
         long diff = now.getTime() - created.getTime();
         long daysSinceCreation = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         float statusRatio = tweetCount / daysSinceCreation;
-        if (statusRatio > 50){
+        if (statusRatio > MAX_TWEET_PER_DAY){
             return true;
         }
         return false;
@@ -63,12 +66,12 @@ public class Friend {
         long diff = now.getTime() - created.getTime();
         long daysSinceCreation = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         float statusRatio = tweetCount / daysSinceCreation;
-        if (statusRatio < 0.02) {
+        if (statusRatio < MIN_TWEETS_PER_DAY) {
             return true;
         }
         long postDiff = now.getTime() - lastStatus.getTime();
         long daysSinceLastPost = TimeUnit.DAYS.convert(postDiff, TimeUnit.MILLISECONDS);
-        if (daysSinceLastPost > 30){
+        if (daysSinceLastPost > MAX_DAYS_INACTIVE){
             return true;
         }
 

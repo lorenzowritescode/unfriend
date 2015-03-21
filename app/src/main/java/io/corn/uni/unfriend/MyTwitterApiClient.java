@@ -4,7 +4,8 @@ import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Session;
 import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.models.User;
-import com.twitter.sdk.android.core.models.UserEntities;
+
+import java.util.List;
 
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -24,6 +25,10 @@ public class MyTwitterApiClient extends TwitterApiClient{
     public FriendsService getFriendsService () {
         return getService(FriendsService.class);
     }
+
+    public ExpandIdService expandIds (){
+        return getService(ExpandIdService.class);
+    }
 }
 
 // example users/show service endpoint
@@ -34,5 +39,24 @@ interface UserService {
 
 interface FriendsService {
     @GET("/1.1/friends/ids.json")
-    void getFriends(@Query("user_id") long id, @Query("screen_name") String screen_name,@Query("stringify_ids") boolean stringify_ids,  Callback<UserEntities> cb);
+    void getFriends(@Query("user_id") long id,
+                    @Query("screen_name") String screen_name,
+                    @Query("stringify_ids") boolean stringify_ids,
+                    Callback<FriendList> friendList);
+
+    void getFriendsCursored(@Query("user_id") long id,
+                            @Query("screen_name") String screen_name,
+                            @Query("stringify_ids") boolean stringify_ids,
+                            @Query("count") int count,
+                            @Query("cursor") int cursor,
+                            Callback<FriendList> friendList);
 }
+
+interface ExpandIdService {
+    @GET("/1.1/users/lookup.json")
+    void expandIds(@Query("user_id") String comma_separated_ids,
+                   @Query("include_entities") boolean include_entities,
+                   Callback<FullUsers> callback);
+}
+
+
