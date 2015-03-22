@@ -49,6 +49,9 @@ public class FriendContainer {
                 u.statusesCount,
                 u.friendsCount);
 
+        f.setPictureUrl(u.profileImageUrl);
+        f.setScreenName(u.screenName);
+
         this.friends.add(f);
     }
 

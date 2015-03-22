@@ -7,17 +7,26 @@ public class Friend {
     public static final int MAX_TWEET_PER_DAY = 50;
     public static final double MIN_TWEETS_PER_DAY = 0.02;
     public static final int MAX_DAYS_INACTIVE = 30;
+
+    FriendType type;
     long id;
     String name;
+    String screenName;
     Date created;
     Date lastStatus;
     int followerCount;
     int friendCount;
     int tweetCount;
+    String pictureUrl;
 
     @Override
     public String toString() {
         return name;
+    }
+
+    public Friend(long id, FriendType type) {
+        this.id = id;
+        this.type = type;
     }
 
     public Friend(long id, String name, Date created,
@@ -122,6 +131,45 @@ public class Friend {
         return 0;
     }
 
+    public void setType(FriendType type) {
 
+        this.type = type;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public void setLastStatus(Date lastStatus) {
+        this.lastStatus = lastStatus;
+    }
+
+    public void setFollowerCount(int followerCount) {
+        this.followerCount = followerCount;
+    }
+
+    public void setFriendCount(int friendCount) {
+        this.friendCount = friendCount;
+    }
+
+    public void setTweetCount(int tweetCount) {
+        this.tweetCount = tweetCount;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
+    public void setScreenName(String screen_name) {
+        this.screenName = screen_name;
+    }
 }
+
