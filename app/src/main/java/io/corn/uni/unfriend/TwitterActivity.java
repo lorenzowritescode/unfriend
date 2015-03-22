@@ -16,12 +16,13 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 
-public class TwitterActivity extends ActionBarActivity implements TwitterList.OnFragmentInteractionListener{
+public class TwitterActivity extends ActionBarActivity implements TwitterList.OnFragmentInteractionListener, Notifiable{
 
     private TwitterLoginButton loginButton;
     private View twitterListView;
     TwitterSession session;
     TwitterList twitterList;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -70,13 +71,13 @@ public class TwitterActivity extends ActionBarActivity implements TwitterList.On
     private void goToListView() {
         assert isAuthed(): "The user should be authenticated";
         showLogout();
-        ProgressDialog progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("Wait while loading...");
-        progress.show();
+        pd = new ProgressDialog(this);
+        pd.setTitle("Loading");
+        pd.setMessage("Wait while loading...");
+        pd.show();
         // TODO: start processing the list and hide the thingy when doen
         FriendContainer fc = new FriendContainer();
-        FriendsRetriever fr = new FriendsRetriever(fc, twitterList);
+        FriendsRetriever fr = new FriendsRetriever(fc, twitterList, this);
         twitterList.attachFriendContainer(fc);
         fr.getIds(Twitter.getSessionManager().getActiveSession().getUserId());
         twitterListView.setVisibility(View.VISIBLE);
@@ -128,5 +129,10 @@ public class TwitterActivity extends ActionBarActivity implements TwitterList.On
     @Override
     public void onFragmentInteraction(String id) {
 
+    }
+
+    @Override
+    public void allDone() {
+        pd.hide();
     }
 }

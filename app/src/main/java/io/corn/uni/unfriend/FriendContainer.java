@@ -38,6 +38,8 @@ public class FriendContainer {
         } catch (ParseException e) {
             System.err.println("Error parsing the date " + e.getMessage());
             e.printStackTrace();
+        } catch(NullPointerException e){
+            return;
         }
 
         Friend f = new Friend(
