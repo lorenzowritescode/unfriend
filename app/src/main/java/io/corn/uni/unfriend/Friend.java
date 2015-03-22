@@ -7,22 +7,20 @@ public class Friend {
     public static final int MAX_TWEET_PER_DAY = 50;
     public static final double MIN_TWEETS_RATIO = 0.02;
     public static final int MAX_DAYS_INACTIVE = 30;
-    int id;
+    long id;
     String name;
     Date created;
-    Date friendsSince;
     Date lastStatus;
     int followerCount;
     int friendCount;
     int tweetCount;
 
-    public Friend(int id, String name, Date created, Date friendsSince,
+    public Friend(long id, String name, Date created,
                   Date lastStatus, int followerCount, int tweetCount, int friendCount) {
 
         this.id = id;
         this.name = name;
         this.created = created;
-        this.friendsSince = friendsSince;
         this.lastStatus = lastStatus;
         this.followerCount = followerCount;
         this.tweetCount = tweetCount;

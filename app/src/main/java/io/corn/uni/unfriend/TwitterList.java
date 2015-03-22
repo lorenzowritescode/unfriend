@@ -47,6 +47,7 @@ public class TwitterList extends Fragment implements AbsListView.OnItemClickList
      * Views.
      */
     private ListAdapter mAdapter;
+    private FriendContainer fc;
 
     // TODO: Rename and change types of parameters
     public static TwitterList newInstance(String param1, String param2) {
@@ -74,9 +75,16 @@ public class TwitterList extends Fragment implements AbsListView.OnItemClickList
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        fc = new FriendContainer();
+        renderList();
+    }
+
+    private void renderList() {
+        mAdapter = new ArrayAdapter<Friend>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, fc.getFriends());
+
+        mListView.setAdapter(mAdapter);
+        System.out.println("Got this many frienz " + fc.getFriends().size());
     }
 
     @Override
@@ -132,6 +140,12 @@ public class TwitterList extends Fragment implements AbsListView.OnItemClickList
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
         }
+    }
+
+    public void attachFriendContainer(FriendContainer fc) {
+        this.fc = fc;
+        renderList();
+        System.out.println("Attached " + fc.getFriends().size() + " new friends to the Twitter List");
     }
 
     /**

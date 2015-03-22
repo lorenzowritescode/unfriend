@@ -19,16 +19,19 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 public class TwitterActivity extends ActionBarActivity implements TwitterList.OnFragmentInteractionListener{
 
     private TwitterLoginButton loginButton;
-    private View twitter_list;
+    private View twitterListView;
     TwitterSession session;
+    TwitterList twitterList;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_twitter);
 
-        twitter_list = findViewById(R.id.twitter_list);
-        twitter_list.setVisibility(View.GONE);
+        twitterListView = findViewById(R.id.twitter_list);
+        twitterListView.setVisibility(View.GONE);
+
+        twitterList = (TwitterList) getFragmentManager().findFragmentById(R.id.twitter_list);
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setVisibility(View.GONE);
@@ -72,9 +75,11 @@ public class TwitterActivity extends ActionBarActivity implements TwitterList.On
         progress.setMessage("Wait while loading...");
         progress.show();
         // TODO: start processing the list and hide the thingy when doen
-        FriendsRetriever fr = new FriendsRetriever();
+        FriendContainer fc = new FriendContainer();
+        twitterList.attachFriendContainer(fc);
+        FriendsRetriever fr = new FriendsRetriever(fc);
         fr.getIds(Twitter.getSessionManager().getActiveSession().getUserId());
-        twitter_list.setVisibility(View.VISIBLE);
+        twitterListView.setVisibility(View.VISIBLE);
     }
 
     private void showLogout() {
@@ -85,7 +90,7 @@ public class TwitterActivity extends ActionBarActivity implements TwitterList.On
             public void onClick(View v) {
                 Twitter.getSessionManager().clearActiveSession();
                 sign_out_bt.setVisibility(View.INVISIBLE);
-                twitter_list.setVisibility(View.GONE);
+                twitterListView.setVisibility(View.GONE);
                 showAuthButton();
             }
         });
