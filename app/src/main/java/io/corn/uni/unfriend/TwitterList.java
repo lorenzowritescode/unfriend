@@ -13,6 +13,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
+import java.util.Collections;
+
 import io.corn.uni.unfriend.dummy.DummyContent;
 
 /**
@@ -24,7 +26,7 @@ import io.corn.uni.unfriend.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class TwitterList extends Fragment implements AbsListView.OnItemClickListener {
+public class TwitterList extends Fragment implements AbsListView.OnItemClickListener, Notifiable {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,13 +78,12 @@ public class TwitterList extends Fragment implements AbsListView.OnItemClickList
         }
 
         fc = new FriendContainer();
-        renderList();
     }
 
     private void renderList() {
-        mAdapter = new ArrayAdapter<Friend>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, fc.getFriends());
-
+        Friend[] _friends = new Friend[fc.getFriends().size()];
+        fc.getFriends().toArray(_friends);
+        mAdapter = new FriendAdapter(this.getActivity(), _friends);
         mListView.setAdapter(mAdapter);
         System.out.println("Got this many frienz " + fc.getFriends().size());
     }
@@ -144,8 +145,12 @@ public class TwitterList extends Fragment implements AbsListView.OnItemClickList
 
     public void attachFriendContainer(FriendContainer fc) {
         this.fc = fc;
-        renderList();
         System.out.println("Attached " + fc.getFriends().size() + " new friends to the Twitter List");
+    }
+
+    @Override
+    public void allDone() {
+        renderList();
     }
 
     /**

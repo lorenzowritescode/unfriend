@@ -15,6 +15,11 @@ public class Friend {
     int friendCount;
     int tweetCount;
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public Friend(long id, String name, Date created,
                   Date lastStatus, int followerCount, int tweetCount, int friendCount) {
 

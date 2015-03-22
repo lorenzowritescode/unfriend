@@ -76,8 +76,8 @@ public class TwitterActivity extends ActionBarActivity implements TwitterList.On
         progress.show();
         // TODO: start processing the list and hide the thingy when doen
         FriendContainer fc = new FriendContainer();
+        FriendsRetriever fr = new FriendsRetriever(fc, twitterList);
         twitterList.attachFriendContainer(fc);
-        FriendsRetriever fr = new FriendsRetriever(fc);
         fr.getIds(Twitter.getSessionManager().getActiveSession().getUserId());
         twitterListView.setVisibility(View.VISIBLE);
     }
