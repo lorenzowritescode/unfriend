@@ -51,7 +51,6 @@ public class TwitterList extends Fragment implements AbsListView.OnItemClickList
     private ListAdapter mAdapter;
     private FriendContainer fc;
 
-    // TODO: Rename and change types of parameters
     public static TwitterList newInstance(String param1, String param2) {
         TwitterList fragment = new TwitterList();
         Bundle args = new Bundle();

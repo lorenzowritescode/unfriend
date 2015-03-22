@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -29,8 +30,15 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 
         Friend f = values[position];
         View rowView = inflater.inflate(R.layout.friend_list_item, parent, false);
-        TextView name = (TextView) rowView.findViewById(R.id.name);
+        TextView name = (TextView) rowView.findViewById(R.id.full_name);
         name.setText(f.name);
+
+
+        TextView screenName = (TextView) rowView.findViewById(R.id.screen_name);
+        screenName.setText(f.screenName);
+
+        ImageView profile_pic = (ImageView) rowView.findViewById(R.id.profile_pic);
+        new ImageDownloader(profile_pic).execute(f.pictureUrl);
 
         return rowView;
     }
