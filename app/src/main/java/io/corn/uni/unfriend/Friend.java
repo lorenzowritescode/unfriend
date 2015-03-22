@@ -91,7 +91,7 @@ public class Friend {
         }
         else if(statusRatio < 0.33)
         {
-            ratioScore = (int) Math.round((statusRatio - 0.02)/0.31 * 50);
+            ratioScore = (int) Math.round((statusRatio - 0.02)/0.31 * 25);
         }
 
         if(ratioScore < 0){
@@ -102,7 +102,7 @@ public class Friend {
         if(days > 30){
             activityScore = 25;
         } else if(days > 7){
-            activityScore = Math.round((days - 7)/23 * 50);
+            activityScore = Math.round((days - 7)/23 * 25);
         }
 
         assert (activityScore <= 50 && activityScore >= 0);
@@ -124,7 +124,7 @@ public class Friend {
             /* Using a bit of linear algebra here. you'll just have to trust the math */
             double d = Math.abs(followerCount - friendCount + friendLowerBound) / Math.sqrt(2);
             double maxD = Math.abs(0 - friendUpperBound + friendLowerBound) / Math.sqrt(2);
-            return (int) Math.round(d/maxD * 100);
+            return (int) Math.round(d/maxD * 50);
         }
         return 0;
     }

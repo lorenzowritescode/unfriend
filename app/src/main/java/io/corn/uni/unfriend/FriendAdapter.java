@@ -4,9 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import io.corn.uni.unfriend.dummy.DummyContent;
 
 /**
  * Created by lp1813 on 22/03/15.
@@ -33,13 +37,18 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
         TextView name = (TextView) rowView.findViewById(R.id.full_name);
         name.setText(f.name);
 
-
         TextView screenName = (TextView) rowView.findViewById(R.id.screen_name);
         screenName.setText(f.screenName);
+
+        ProgressBar bar = (ProgressBar) rowView.findViewById(R.id.progressBar);
+        bar.setMax(100);
+        TestResult tr = f.testFriend();
+        bar.setProgress(tr.activityScore + tr.realnessScore);
 
         ImageView profile_pic = (ImageView) rowView.findViewById(R.id.profile_pic);
         new ImageDownloader(profile_pic).execute(f.pictureUrl);
 
         return rowView;
     }
+
 }
