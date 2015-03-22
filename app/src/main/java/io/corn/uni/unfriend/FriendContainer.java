@@ -16,6 +16,8 @@ import java.util.List;
 public class FriendContainer {
     List<Friend> friends;
 
+    final static String TWITTER="EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+
     public FriendContainer() {
         friends = new ArrayList<>();
     }
@@ -24,6 +26,7 @@ public class FriendContainer {
         for (User u : users){
             convertFromTwitter(u);
         }
+        System.out.println("Friends list now is " + friends.size());
     }
 
     public void convertFromTwitter(User u) {
@@ -50,8 +53,11 @@ public class FriendContainer {
     }
 
     private Date parseTwitterDate(String dateString) throws ParseException {
-        final String TWITTER="EEE, dd MMM yyyy HH:mm:ss ZZZZZ";
         SimpleDateFormat sf = new SimpleDateFormat(TWITTER);
         return sf.parse(dateString);
+    }
+
+    public List<Friend> getFriends() {
+        return friends;
     }
 }
