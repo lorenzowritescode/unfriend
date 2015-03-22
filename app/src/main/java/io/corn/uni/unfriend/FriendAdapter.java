@@ -40,15 +40,21 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
         TextView screenName = (TextView) rowView.findViewById(R.id.screen_name);
         screenName.setText(f.screenName);
 
+        TextView unfollowScore = (TextView) rowView.findViewById(R.id.unfollowScore);
+        TestResult tr = f.testFriend();
+        int score = tr.activityScore + tr.realnessScore;
+        unfollowScore.setText(score + "%");
+
         ProgressBar bar = (ProgressBar) rowView.findViewById(R.id.progressBar);
         bar.setMax(100);
-        TestResult tr = f.testFriend();
-        bar.setProgress(tr.activityScore + tr.realnessScore);
+        bar.setProgress(score);
 
         ImageView profile_pic = (ImageView) rowView.findViewById(R.id.profile_pic);
         new ImageDownloader(profile_pic).execute(f.pictureUrl);
 
         return rowView;
     }
+
+
 
 }
