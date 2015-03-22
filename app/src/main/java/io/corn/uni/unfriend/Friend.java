@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 public class Friend {
 
     public static final int MAX_TWEET_PER_DAY = 50;
-    public static final double MIN_TWEETS_PER_DAY = 0.02;
+    public static final double MIN_TWEETS_RATIO = 0.02;
     public static final int MAX_DAYS_INACTIVE = 30;
 
     FriendType type;
@@ -74,14 +74,12 @@ public class Friend {
     }
 
     private boolean isInactive(float statusRatio, long daysSinceLastPost){
-    	if(tweetCount == 0){
-            return true;
-        }
-        return (statusRatio < 0.02 || daysSinceLastPost > 30);
+    	return tweetCount == 0
+                || (statusRatio < MIN_TWEETS_RATIO || daysSinceLastPost > MAX_DAYS_INACTIVE);
     }
 
     private boolean isOverActive(float statusRatio){
-        return statusRatio > 50;
+        return statusRatio > MAX_TWEET_PER_DAY;
     }
 
     /* Returns a score between 0 and 100 depending on the activity of the friend
@@ -93,7 +91,7 @@ public class Friend {
         }
         else if(statusRatio < 0.33)
         {
-            ratioScore = (int) Math.round((statusRatio - 0.02)/0.31 * 50);
+            ratioScore = (int) Math.round((statusRatio - 0.02)/0.31 * 25);
         }
 
         if(ratioScore < 0){
@@ -104,11 +102,11 @@ public class Friend {
         if(days > 30){
             activityScore = 25;
         } else if(days > 7){
-            activityScore = Math.round((days - 7)/23 * 50);
+            activityScore = Math.round((days - 7)/23 * 25);
         }
 
-        assert (activityScore <= 25 && activityScore >= 0);
-        assert (ratioScore <= 25 && ratioScore >= 0);
+        assert (activityScore <= 50 && activityScore >= 0);
+        assert (ratioScore <= 50 && ratioScore >= 0);
 
         return activityScore + ratioScore;
     }
@@ -124,9 +122,9 @@ public class Friend {
         }
         if(followerCount < friendCount && friendCount > friendLowerBound){
             /* Using a bit of linear algebra here. you'll just have to trust the math */
-            double d = Math.abs(followerCount - friendCount + 200) / Math.sqrt(2);
-            double maxD = Math.abs(0 - friendUpperBound + 200) / Math.sqrt(2);
-            return (int) Math.round(d/maxD * 100);
+            double d = Math.abs(followerCount - friendCount + friendLowerBound) / Math.sqrt(2);
+            double maxD = Math.abs(0 - friendUpperBound + friendLowerBound) / Math.sqrt(2);
+            return (int) Math.round(d/maxD * 50);
         }
         return 0;
     }
