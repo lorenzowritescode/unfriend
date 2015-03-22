@@ -14,9 +14,11 @@ import java.util.List;
  */
 public class FriendsRetriever {
     public static final int CURSOR_FIRST_PAGE = -1;
+    private final FriendContainer fc;
     MyTwitterApiClient api;
 
-    public FriendsRetriever() {
+    public FriendsRetriever(FriendContainer fc) {
+        this.fc = fc;
         TwitterSession session = Twitter.getSessionManager().getActiveSession();
         api = new MyTwitterApiClient(session);
     }
@@ -75,17 +77,16 @@ public class FriendsRetriever {
         System.out.println("SIZE " + ids.size());
 
         ExpandIdService expander = api.expandIds();
-        expander.expandIds(comma_separated, false, new Callback<FullUsers>() {
+        expander.expandIds(comma_separated, false, new Callback<List<User>>() {
             @Override
-            public void success(Result<FullUsers> userEntitiesResult) {
-                for (User u : userEntitiesResult.data.users){
-                    System.out.println(u.name);
-                }
+            public void success(Result<List<User>> userEntitiesResult) {
+                fc.convertFromTwitter(userEntitiesResult.data);
             }
 
             @Override
             public void failure(TwitterException e) {
                 System.err.println("Failed to expand user_ids: " + e.getMessage());
+                e.printStackTrace();
             }
         });
 

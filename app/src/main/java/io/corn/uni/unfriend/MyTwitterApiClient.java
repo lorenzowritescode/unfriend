@@ -56,7 +56,7 @@ interface ExpandIdService {
     @GET("/1.1/users/lookup.json")
     void expandIds(@Query("user_id") String comma_separated_ids,
                    @Query("include_entities") boolean include_entities,
-                   Callback<FullUsers> callback);
+                   Callback<List<User>> callback);
 }
 
 
