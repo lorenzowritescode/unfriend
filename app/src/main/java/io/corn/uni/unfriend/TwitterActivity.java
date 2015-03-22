@@ -17,8 +17,10 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 
 public class TwitterActivity extends ActionBarActivity implements TwitterList.OnFragmentInteractionListener{
+
     private TwitterLoginButton loginButton;
     private View twitter_list;
+    TwitterSession session;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -40,7 +42,8 @@ public class TwitterActivity extends ActionBarActivity implements TwitterList.On
             loginButton.setCallback(new Callback<TwitterSession>() {
                 @Override
                 public void success(Result<TwitterSession> result) {
-                    Twitter.getSessionManager().setActiveSession(result.data);
+                    session = result.data;
+                    Twitter.getSessionManager().setActiveSession(session);
                     loginButton.setVisibility(View.GONE);
                     goToListView();
                 }
@@ -68,6 +71,9 @@ public class TwitterActivity extends ActionBarActivity implements TwitterList.On
         progress.setTitle("Loading");
         progress.setMessage("Wait while loading...");
         progress.show();
+        // TODO: start processing the list and hide the thingy when doen
+        FriendsRetriever fr = new FriendsRetriever();
+        fr.getIds(Twitter.getSessionManager().getActiveSession().getUserId());
         twitter_list.setVisibility(View.VISIBLE);
     }
 

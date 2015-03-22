@@ -4,6 +4,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Friend {
 
+    public static final int MAX_TWEET_PER_DAY = 50;
+    public static final double MIN_TWEETS_PER_DAY = 0.02;
+    public static final int MAX_DAYS_INACTIVE = 30;
     int id;
     String name;
     Date created;
@@ -55,9 +58,13 @@ public class Friend {
 
     private boolean isFake(float statusRatio){
         return (friendCount > 2000 || (statusRatio < 0.05 && followerCount > 1000));
+        
     }
 
     private boolean isInactive(float statusRatio, long daysSinceLastPost){
+    	if(tweetCount == 0){
+            return true;
+        }
         return (statusRatio < 0.02 || daysSinceLastPost > 30);
     }
 
