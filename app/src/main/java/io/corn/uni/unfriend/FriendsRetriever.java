@@ -15,10 +15,13 @@ import java.util.List;
 public class FriendsRetriever {
     public static final int CURSOR_FIRST_PAGE = -1;
     private final FriendContainer fc;
+    private final Notifiable observed;
     MyTwitterApiClient api;
 
-    public FriendsRetriever(FriendContainer fc) {
+    public FriendsRetriever(FriendContainer fc, Notifiable observed) {
         this.fc = fc;
+        this.observed = observed;
+
         TwitterSession session = Twitter.getSessionManager().getActiveSession();
         api = new MyTwitterApiClient(session);
     }
@@ -81,6 +84,8 @@ public class FriendsRetriever {
             @Override
             public void success(Result<List<User>> userEntitiesResult) {
                 fc.convertFromTwitter(userEntitiesResult.data);
+
+                observed.allDone();
             }
 
             @Override
