@@ -1,12 +1,11 @@
 package io.corn.uni.unfriend;
 
-import com.twitter.sdk.android.core.TwitterAuthToken;
-import com.twitter.sdk.android.core.internal.TwitterApi;
 import com.twitter.sdk.android.core.models.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +62,11 @@ public class FriendContainer {
     }
 
     public List<Friend> getFriends() {
+        return friends;
+    }
+
+    public List<Friend> getSortedFriends() {
+        Collections.sort(friends, Collections.reverseOrder());
         return friends;
     }
 }

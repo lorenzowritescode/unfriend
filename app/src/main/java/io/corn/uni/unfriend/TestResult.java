@@ -18,4 +18,8 @@ public class TestResult {
         this.fake = fake;
         this.newProfile = newProfile;
     }
+
+    public int getFinalScore() {
+        return activityScore + realnessScore;
+    }
 }
