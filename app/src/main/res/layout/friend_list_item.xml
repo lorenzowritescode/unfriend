@@ -15,37 +15,52 @@
             android:id="@+id/profile_pic"
             android:layout_gravity="left|top" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/screen_name"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toEndOf="@+id/profile_pic"
+            android:weightSum="1"
+            android:layout_alignParentTop="true"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/full_name"
-            android:layout_above="@+id/screen_name"
-            android:layout_alignLeft="@+id/screen_name"
-            android:layout_alignStart="@+id/screen_name" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/full_name"
+                android:singleLine="true"
+                android:layout_above="@+id/screen_name"
+                android:layout_alignRight="@+id/screen_name"
+                android:layout_alignEnd="@+id/screen_name"
+                android:layout_gravity="left" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:layout_below="@+id/screen_name"
-            android:layout_alignLeft="@+id/screen_name"
-            android:layout_alignStart="@+id/screen_name"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/screen_name"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="left" />
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:layout_below="@+id/screen_name"
+                android:layout_alignLeft="@+id/screen_name"
+                android:layout_alignStart="@+id/screen_name"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="0.74"
+                android:layout_gravity="left" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

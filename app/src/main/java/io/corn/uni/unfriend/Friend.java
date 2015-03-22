@@ -2,7 +2,7 @@ package io.corn.uni.unfriend;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Friend {
+public class Friend implements Comparable<Friend> {
 
     public static final int MAX_TWEET_PER_DAY = 50;
     public static final double MIN_TWEETS_RATIO = 0.02;
@@ -18,6 +18,12 @@ public class Friend {
     int friendCount;
     int tweetCount;
     String pictureUrl;
+
+    public TestResult getResult() {
+        return result == null? testFriend() : result;
+    }
+
+    private TestResult result;
 
     @Override
     public String toString() {
@@ -43,6 +49,9 @@ public class Friend {
     }
 
     public TestResult testFriend(){
+        if(result != null)
+            return result;
+
         Date now = new Date();
         float statusRatio;
         long diff = now.getTime() - created.getTime();
@@ -65,7 +74,9 @@ public class Friend {
 
         int activityScore = actScore(statusRatio, daysSinceLastPost);
         int realnessScore = rScore();
-        return new TestResult(activityScore, realnessScore, inactive, overActive, fake, newProfile);
+
+        result = new TestResult(activityScore, realnessScore, inactive, overActive, fake, newProfile);
+        return result;
     }
 
     private boolean isFake(float statusRatio){
@@ -168,6 +179,18 @@ public class Friend {
 
     public void setScreenName(String screen_name) {
         this.screenName = screen_name;
+    }
+
+    @Override
+    public int compareTo(Friend another) {
+        int myScore = this.getResult().getFinalScore();
+        int theirScore = another.getResult().getFinalScore();
+        if (myScore < theirScore)
+            return -1;
+        else if (myScore == theirScore)
+            return 0;
+        else
+            return -1;
     }
 }
 

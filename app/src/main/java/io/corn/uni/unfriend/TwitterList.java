@@ -80,7 +80,7 @@ public class TwitterList extends Fragment implements AbsListView.OnItemClickList
     }
 
     private void renderList() {
-        Friend[] _friends = new Friend[fc.getFriends().size()];
+        Friend[] _friends = new Friend[fc.getSortedFriends().size()];
         fc.getFriends().toArray(_friends);
         mAdapter = new FriendAdapter(this.getActivity(), _friends);
         mListView.setAdapter(mAdapter);
@@ -144,7 +144,6 @@ public class TwitterList extends Fragment implements AbsListView.OnItemClickList
 
     public void attachFriendContainer(FriendContainer fc) {
         this.fc = fc;
-        System.out.println("Attached " + fc.getFriends().size() + " new friends to the Twitter List");
     }
 
     @Override
