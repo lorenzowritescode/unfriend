@@ -1,6 +1,7 @@
 package io.corn.uni.unfriend;
 
 import android.app.ProgressDialog;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,7 +17,7 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 
-public class TwitterActivity extends ActionBarActivity implements TwitterList.OnFragmentInteractionListener, Notifiable{
+public class TwitterActivity extends ActionBarActivity implements TwitterList.OnFragmentInteractionListener, Notifiable, twitter_result.OnFragmentInteractionListener{
 
     private TwitterLoginButton loginButton;
     private View twitterListView;
@@ -133,6 +134,12 @@ public class TwitterActivity extends ActionBarActivity implements TwitterList.On
 
     @Override
     public void allDone() {
-        pd.hide();
+//        pd.hide();
+        pd.dismiss();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

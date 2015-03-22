@@ -122,11 +122,9 @@ public class TwitterList extends Fragment implements AbsListView.OnItemClickList
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
+        Friend f = fc.getFriends().get(position);
+        twitter_result tw = twitter_result.newInstance(f);
+        getFragmentManager().beginTransaction().replace(R.id.twitter_list, tw).commit();
     }
 
     /**
